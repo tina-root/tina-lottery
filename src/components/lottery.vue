@@ -121,7 +121,7 @@ export default {
             this.index = index
         },
         a() {
-            axios.get("http://localhost:38888/home/e")
+            axios.get("http://tinaroot.cn/award/e")
                 .then(response => {
                     this.award=response.data
                     console.log(this.award)
