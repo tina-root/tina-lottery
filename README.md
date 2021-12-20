@@ -1,4 +1,5 @@
 # tina-lottery
+> tina抽奖页面
 
 ## Project setup
 ```
@@ -21,4 +22,4 @@ npm run lint
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+See [tinaroot.cn](http://tinaroot.cn).
