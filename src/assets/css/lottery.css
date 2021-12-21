@@ -231,3 +231,39 @@ ul, li {
     background: linear-gradient(180deg, rgba(213, 60, 63, 1) 0%, rgba(201, 20, 24, 1) 100%);
     font-size: 16px;
 }
+
+
+@media only screen and (max-width: 376px) {
+    body {
+        background: radial-gradient(49% 160%, #ffbef5 0, #ffffff 100%);
+        font-size: 14px;
+    }
+
+    .lottery {
+        width: 310px;
+        padding: 10px;
+    }
+
+    .lottery .lottery-item .lottery-start .box p b {
+        font-size: 32px;
+    }
+
+    .lottery .lottery-item ul li .box {
+        height: 92px;
+    }
+
+    .lottery .lottery-item .lottery-start .box {
+        height: 92px;
+    }
+
+    .lottery .lottery-item {
+        margin-top: 17px;
+    }
+
+    .lottery .lottery-item ul li .box img {
+        height: 47px;
+    }
+    .lottery-box .title {
+        padding: 32px 0;
+    }
+}

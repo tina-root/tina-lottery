@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <ul>
-                        <li v-for="(item,i) in award" :key="i" :class="i==index?'on':''">
+                        <li v-for="(item,i) in awards" :key="i" :class="i==index?'on':''">
                             <div class="box">
                                 <p><img :src="item.img" :alt="item.name"/></p>
                                 <p>{{ item.name }}</p>
@@ -31,8 +31,8 @@
             <div class="mask" v-if="showToast"></div>
             <div class="lottery-alert" v-if="showToast">
                 <h1>恭喜您</h1>
-                <p><img :src="award[index].img" alt=""></p>
-                <h2>获得{{ award[index].name }}</h2>
+                <p><img :src="awards[index].img" alt=""></p>
+                <h2>获得{{ awards[index].name }}</h2>
                 <div class="btnsave" @click="showToast=false">确定</div>
             </div>
         </div>
@@ -51,7 +51,7 @@ export default {
         return {
             isStart: 1,
             score: 10, //消耗积分
-            award: [],   //奖品1-9
+            awards: [],   //奖品1-9
             index: -1,  // 当前转动到哪个位置，起点位置
             count: 8,  // 总共有多少个位置
             timer: 0,  // 每次转动定时器
@@ -61,13 +61,15 @@ export default {
             prize: -1,   // 中奖位置
             click: true,
             showToast: false, //显示中奖弹窗
+            award: {}
         }
     },
     created() {
-        this.a()
+        this.e()
     },
     methods: {
         startLottery() {
+            this.f()
             if (!this.click) {
                 return
             }
@@ -93,8 +95,8 @@ export default {
                 if (this.times < this.cycle) {
                     this.speed -= 10  // 加快转动速度
                 } else if (this.times === this.cycle) {
-                    const index = parseInt(Math.random() * 10, 0) || 0;  // 随机获得一个中奖位置
-                    this.prize = index; //中奖位置,可由后台返回
+                    //中奖位置,可由后台返回
+                    this.prize = this.award.orderNum;
                     if (this.prize > 7) {
                         this.prize = 7
                     }
@@ -120,11 +122,18 @@ export default {
             }
             this.index = index
         },
-        a() {
+        e() {
             axios.get("http://tinaroot.cn/award/e")
                 .then(response => {
-                    this.award=response.data
-                    console.log(this.award)
+                    this.awards = response.data
+                }, err => {
+                    console.log(err)
+                })
+        },
+        f() {
+            axios.get("http://tinaroot.cn/award/f")
+                .then(response => {
+                    this.award = response.data
                 }, err => {
                     console.log(err)
                 })
