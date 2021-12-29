@@ -36,7 +36,10 @@
                 <div class="btnsave" @click="showToast=false">确定</div>
             </div>
         </div>
-
+        <!-- 音乐 start-->
+        <div class="musicinfo" id="musicinfo">
+            <audio id="musicid" src="@/assets/TheSpectre-AlanWalker.mp3" preload="preload" autoplay="autoplay"  loop="loop">您的浏览器不支持 audio标签。</audio>
+        </div>
     </div>
 </template>
 
@@ -66,6 +69,9 @@ export default {
     },
     created() {
         this.e()
+    },
+    mounted() {
+        this.autoPlayMusic();
     },
     methods: {
         startLottery() {
@@ -111,7 +117,6 @@ export default {
                 this.timer = setTimeout(this.startRoll, this.speed)
             }
         },
-
         // 每一次转动
         oneRoll() {
             let index = this.index // 当前转动到哪个位置
@@ -137,6 +142,33 @@ export default {
                 }, err => {
                     console.log(err)
                 })
+        },
+        autoPlayMusic(){
+            // 自动播放音乐效果，解决浏览器或者APP自动播放问题
+            function musicInBrowserHandler() {
+                this.musicPlay(true);
+                document.body.removeEventListener('touchstart', musicInBrowserHandler);
+            }
+            document.body.addEventListener('touchstart', musicInBrowserHandler);
+
+            // 自动播放音乐效果，解决微信自动播放问题
+            function musicInWeixinHandler() {
+                this.musicPlay(true);
+                document.addEventListener("WeixinJSBridgeReady", function () {
+                    this.musicPlay(true);
+                }, false);
+                document.removeEventListener('DOMContentLoaded', musicInWeixinHandler);
+            }
+            document.addEventListener('DOMContentLoaded', musicInWeixinHandler);
+        },
+        musicPlay(isPlay) {
+            var audio = document.getElementById('musicid');
+            if (isPlay && audio.paused) {
+                audio.play();
+            }
+            if (!isPlay && !audio.paused) {
+                audio.pause();
+            }
         }
     }
 }
