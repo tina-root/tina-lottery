@@ -64,7 +64,8 @@ export default {
             prize: -1,   // 中奖位置
             click: true,
             showToast: false, //显示中奖弹窗
-            award: {}
+            award: {},
+            flag:true
         }
     },
     created() {
@@ -75,11 +76,13 @@ export default {
     },
     methods: {
         startLottery() {
-            this.f()
-            if (!this.click) {
-                return
+            if (this.flag){
+                this.f()
+                if (!this.click) {
+                    return
+                }
+                this.startRoll();
             }
-            this.startRoll();
         },
         // 开始转动
         startRoll() {
@@ -95,6 +98,7 @@ export default {
                 var that = this;
                 setTimeout(res => {
                     console.log(res)
+                    this.flag=true
                     that.showToast = true;
                 }, 500)
             } else {
@@ -116,6 +120,7 @@ export default {
                 }
                 this.timer = setTimeout(this.startRoll, this.speed)
             }
+
         },
         // 每一次转动
         oneRoll() {
@@ -128,7 +133,7 @@ export default {
             this.index = index
         },
         e() {
-            axios.get("http://tinaroot.cn/award/e")
+            axios.get("http://tina.tinaroot.cn/award/e")
                 .then(response => {
                     this.awards = response.data
                 }, err => {
@@ -136,7 +141,8 @@ export default {
                 })
         },
         f() {
-            axios.get("http://tinaroot.cn/award/f")
+            this.flag=false
+            axios.get("http://tina.tinaroot.cn/award/f")
                 .then(response => {
                     this.award = response.data
                 }, err => {
